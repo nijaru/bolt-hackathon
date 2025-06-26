@@ -1,0 +1,110 @@
+{
+  "tasks": [
+    {
+      "id": "001",
+      "title": "Research hackathon challenge requirements",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": [],
+      "description": "Research all 6 challenge prize requirements ($25K each) and submission format details",
+      "acceptance_criteria": ["All challenge requirements documented", "Submission format confirmed", "Technical restrictions identified"]
+    },
+    {
+      "id": "002", 
+      "title": "Setup Bolt.new development environment",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": ["001"],
+      "description": "Initialize React/TypeScript app with Bolt.new, configure Vite, Tailwind CSS, and Shadcn components",
+      "acceptance_criteria": ["Bolt.new app created", "Basic UI components functional", "Build process working"]
+    },
+    {
+      "id": "003",
+      "title": "Implement core roasting engine",
+      "status": "pending", 
+      "priority": "high",
+      "dependencies": ["002"],
+      "description": "Build OpenAI GPT-4 integration for roast generation with personality system",
+      "acceptance_criteria": ["OpenAI API integrated", "3-4 personality types working", "Basic roast generation functional"]
+    },
+    {
+      "id": "004",
+      "title": "ElevenLabs voice integration",
+      "status": "pending",
+      "priority": "high", 
+      "dependencies": ["003"],
+      "description": "Implement voice AI challenge - audio roast generation with distinct personality voices",
+      "acceptance_criteria": ["ElevenLabs API integrated", "Voice personalities match text personalities", "Audio generation working"]
+    },
+    {
+      "id": "005",
+      "title": "RevenueCat payment integration",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": ["003"],
+      "description": "Implement freemium model with RevenueCat for Make More Money challenge",
+      "acceptance_criteria": ["RevenueCat SDK integrated", "Payment flow functional", "Freemium tiers defined"]
+    },
+    {
+      "id": "006",
+      "title": "Supabase database and auth setup",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": ["002"],
+      "description": "Setup Supabase for user accounts, roast history, and analytics",
+      "acceptance_criteria": ["Supabase project created", "Authentication working", "Database schema defined"]
+    },
+    {
+      "id": "007",
+      "title": "Reddit sharing integration",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": ["003"],
+      "description": "Implement Reddit API integration for Silly Sh!t challenge",
+      "acceptance_criteria": ["Reddit API integrated", "One-click sharing functional", "Subreddit targeting working"]
+    },
+    {
+      "id": "008",
+      "title": "IONOS custom domain setup",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": ["006"],
+      "description": "Implement personal roast page generation for Custom Domain challenge",
+      "acceptance_criteria": ["IONOS domain integration", "Personal roast pages functional", "Domain routing working"]
+    },
+    {
+      "id": "009",
+      "title": "Netlify deployment setup",
+      "status": "pending",
+      "priority": "medium",
+      "dependencies": ["002"],
+      "description": "Setup Netlify Functions for serverless API and full deployment",
+      "acceptance_criteria": ["Netlify Functions working", "Auto-deployment configured", "Environment variables set"]
+    },
+    {
+      "id": "010",
+      "title": "Content moderation and safety",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": ["003"],
+      "description": "Implement toxicity detection and content safety filters",
+      "acceptance_criteria": ["Toxicity detection working", "Safety filters implemented", "Constructive feedback ensured"]
+    },
+    {
+      "id": "011",
+      "title": "Demo preparation and video creation",
+      "status": "pending",
+      "priority": "high",
+      "dependencies": ["004", "005", "007", "008", "009"],
+      "description": "Prepare live demo, create 3-minute video, and finalize submission",
+      "acceptance_criteria": ["Demo script ready", "Video under 3 minutes", "All integrations showcased", "Submission complete"]
+    }
+  ],
+  "current_focus": "001",
+  "next_available": ["002", "006"],
+  "notes": {
+    "hackathon_deadline": "Time-sensitive project with $150K potential",
+    "critical_integrations": "All 6 services must be functional for maximum prize potential",
+    "demo_strategy": "Live demonstration with judge participation for maximum impact"
+  }
+}
