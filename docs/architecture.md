@@ -20,9 +20,11 @@ The AI Roast Generator is a full-stack application designed for the Bolt.new hac
 - **File Storage**: Supabase Storage
 
 ### AI & Voice Services
-- **Primary AI**: OpenAI GPT-4 API
-- **Voice Generation**: ElevenLabs API
-- **Content Analysis**: Custom parsing services
+- **Primary AI**: Google Gemini 2.5 Flash (ultra-affordable ~$0.30/1M tokens)
+- **Fallback AI**: GPT-4o-mini (different provider redundancy)
+- **Voice Generation**: ElevenLabs API (3 months free from Builder Pack)
+- **Content Moderation**: OpenAI Moderation API (free)
+- **Content Analysis**: Gemini 2.5 Flash (same model for consistency)
 
 ### Integration Services
 - **Payments**: RevenueCat SDK
@@ -105,17 +107,21 @@ POST /api/user/subscription  // Update subscription
 ### Personality Engine
 ```python
 class PersonalityEngine:
+    def __init__(self):
+        self.gemini_client = genai.GenerativeModel('gemini-2.5-flash')
+        self.personalities = {
+            'gordon_ramsay': 'Passionate culinary expert with fiery criticism',
+            'simon_cowell': 'Blunt entertainment industry veteran',
+            'gordon_gekko': 'Ruthless business analysis focused on profit',
+            'sherlock_holmes': 'Deductive reasoning with analytical precision'
+        }
+    
     def generate_roast(self, content, personality):
-        # Extract key weaknesses from content
-        weaknesses = self.analyze_content(content)
+        # Single Gemini call for consistency and cost efficiency
+        prompt = self.build_personality_prompt(content, personality)
+        response = self.gemini_client.generate_content(prompt)
         
-        # Apply personality-specific styling
-        roast = self.apply_personality_style(weaknesses, personality)
-        
-        # Add constructive improvements
-        improvements = self.generate_improvements(weaknesses)
-        
-        return self.combine_roast_and_advice(roast, improvements)
+        return self.parse_roast_and_improvements(response.text)
 ```
 
 ## Security & Content Safety
@@ -165,8 +171,9 @@ class PersonalityEngine:
 ### Environment Variables
 ```bash
 # AI Services
-OPENAI_API_KEY=
-ELEVENLABS_API_KEY=
+GOOGLE_GEMINI_API_KEY=
+OPENAI_API_KEY=              # For moderation API (free) and fallback
+ELEVENLABS_API_KEY=          # 3 months free from Builder Pack
 
 # Database
 SUPABASE_URL=
@@ -183,10 +190,11 @@ IONOS_API_KEY=
 ## Error Handling & Recovery
 
 ### Fallback Strategies
-- **OpenAI Failure**: Generic roasting templates
-- **ElevenLabs Failure**: Text-to-speech fallback
+- **Gemini Failure**: GPT-4o-mini backup model
+- **All AI Failure**: Pre-generated roasting templates for demo
+- **ElevenLabs Failure**: Browser text-to-speech fallback
 - **Database Issues**: Local storage backup
-- **Network Issues**: Offline mode with cached data
+- **Network Issues**: Offline mode with cached roasts
 
 ### Monitoring
 - API response times
@@ -218,12 +226,18 @@ supabase start          # Local Supabase instance
 
 ### Current Limits
 - Netlify Functions: 10s execution limit
-- OpenAI: Rate limits by tier
-- ElevenLabs: Character limits
+- Gemini: Rate limits (15 RPM free tier, 1000 RPM paid)
+- ElevenLabs: Character limits (10k/month free via Builder Pack)
 - Supabase: Connection pooling
 
+### Cost Projections (Google Cloud $300 credit)
+- **1000 roasts**: ~$0.15 (500-word responses)
+- **10,000 roasts**: ~$1.50 
+- **100,000 roasts**: ~$15
+- **Credit capacity**: ~2M roasts before paid billing
+
 ### Scaling Strategy
-- Microservices for heavy processing
+- Gemini 2.5 Flash enables cost-effective unlimited tier
+- Caching layer for similar LinkedIn profiles
 - Queue system for voice generation
-- CDN for static assets
-- Database indexing optimization
+- CDN for static assets and cached responses

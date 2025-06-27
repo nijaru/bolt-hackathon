@@ -27,7 +27,7 @@
 - **Rate Limits**: Implement exponential backoff, cache responses
 - **API Key Management**: Use environment variables, never commit secrets
 - **CORS Issues**: Configure Netlify functions properly for cross-origin requests
-- **Timeout Handling**: Set appropriate timeouts for AI API calls (GPT-4 can be slow)
+- **Timeout Handling**: Set appropriate timeouts for AI API calls (Gemini is fast but ElevenLabs can be slow)
 
 ### Development Issues
 - **Hot Reload Problems**: Clear browser cache, restart dev server
@@ -51,13 +51,13 @@
 
 ### Technical Constraints
 - **Netlify Functions**: 10-second execution limit
-- **OpenAI API**: Rate limits, context length limits
-- **ElevenLabs**: Character limits for voice generation
+- **Google Gemini API**: Rate limits (15 RPM free, 1000 RPM paid), context length limits
+- **ElevenLabs**: Character limits for voice generation (10k/month free via Builder Pack)
 - **RevenueCat**: Mobile SDK vs web implementation differences
 
 ## Service Integration Notes
 
-### OpenAI GPT-4
+### Google Gemini 2.5 Flash
 ```javascript
 // Recommended prompt structure
 const roastPrompt = `
@@ -66,6 +66,10 @@ Content: ${content}
 Rules: Be harsh but helpful. Include specific improvement suggestions.
 Format: [Roast] followed by [Improvements]
 `;
+
+// Gemini API call pattern
+const response = await genai.generateContent(roastPrompt);
+const roastText = response.response.text();
 ```
 
 ### ElevenLabs Voice
@@ -96,7 +100,7 @@ create policy "Users can access own roasts"
 2. **Offline Demo Video**: 3-minute backup video if live integration fails
 3. **Multiple Personality Examples**: Ready-to-show examples for each personality type
 4. **Screenshot Evidence**: All integrations working locally with timestamps
-5. **Fallback Personalities**: Generic roasting templates if OpenAI/AI services fail
+5. **Fallback Personalities**: Generic roasting templates if Gemini/AI services fail
 6. **Judge Participation**: Pre-selected volunteer judges if audience participation fails
 
 ### Development Recovery
@@ -130,18 +134,20 @@ create policy "Users can access own roasts"
 
 ### Common Debugging Commands
 ```bash
-# Check API responses
-curl -X POST "https://api.openai.com/v1/chat/completions" \
-  -H "Authorization: Bearer $OPENAI_API_KEY"
-
 # Test Netlify functions locally
 netlify dev
 
 # Supabase status
 supabase status
 
+# Database migrations
+npx supabase db push
+
 # Build and deploy
 npm run build && netlify deploy --prod
+
+# Check function logs
+netlify functions:log
 ```
 
 ## Success Metrics

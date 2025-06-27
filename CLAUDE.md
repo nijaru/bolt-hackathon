@@ -15,46 +15,73 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **What**: AI Roast Generator - constructive AI-powered roasting tool with personality voices and improvement suggestions
 **Why**: Bolt.new hackathon project targeting 6 challenge prizes ($25K each = $150K potential)
-**Status**: Initial setup phase - no code yet, planning complete (see docs/roast_generator_spec.md)
+**Status**: COMPLETE - All 6 integrations built and functional, ready for submission
 
 ## Quick Commands
 
-**Setup Phase**:
+**Development**:
 ```bash
-# Python microservices setup (when ready)
-uv sync                    # Install dependencies
-uv run python main.py     # Run Python services
-uv add <package>          # Add new package
-
-# Frontend setup (via Bolt.new)
+# Frontend setup
 npm install               # Install dependencies  
-npm run dev              # Development server
+npm run dev              # Development server (localhost:5173)
 npm run build            # Production build
+
+# Database management
+npx supabase db push     # Apply migrations
+npx supabase db reset    # Reset database
+
+# Deployment
+netlify deploy           # Deploy to staging
+netlify deploy --prod    # Deploy to production
 ```
 
-**Task Management**:
-- Always start with: TodoRead (check current tasks)
-- For multi-step work: TodoWrite (create task breakdown)
+**Demo Commands**:
+```bash
+# Quick demo setup
+npm run demo:setup       # Setup demo environment
+npm run demo:reset       # Reset demo data
+npm run demo:test        # Test all integrations
+```
 
-## Task Management
+## Project Status
 
-**Current Focus**: Check `docs/tasks.json` for current tasks and priorities
+**🏆 HACKATHON READY**: All 6 challenges complete and functional
+**Demo Strategy**: See `docs/demo_strategy.md` for 3-minute presentation plan
 **System Architecture**: See `docs/architecture.md` for technical design and patterns
-**AI Context**: Check `.ai/context.md` for project patterns, troubleshooting, and constraints
+**Manual Tasks**: See `docs/hackathon_submission_checklist.md` for demo prep checklist
+**Submission Materials**: README.md updated with complete project overview
 
-## Essential Sources
+## Challenge Integrations (ALL COMPLETE ✅)
 
-**Project Planning**: `docs/roast_generator_spec.md` - Complete project specification and roadmap
-**System Design**: `docs/architecture.md` - Technical architecture, database schema, API design
-**Development Context**: `.ai/context.md` - Patterns, common issues, integration notes
-**API Design**: 
-```javascript
-POST /api/roast           # Generate new roast
-GET /api/roast/:id        # Retrieve saved roast
-POST /api/voice/:roastId  # Generate audio version
-POST /api/share/reddit    # Share to Reddit
-GET /api/user/history     # User's roast history
-```
+**1. Voice AI - ElevenLabs ($25K)**
+- ✅ Personality-matched voice generation
+- ✅ 4 distinct AI voices (Gordon Ramsay, Simon Cowell, etc.)
+- ✅ Real-time audio streaming
+
+**2. Make More Money - RevenueCat ($25K)**  
+- ✅ Freemium subscription model
+- ✅ Usage tracking and limits
+- ✅ 3-tier pricing (Free/Premium/Enterprise)
+
+**3. Silly Sh!t - Reddit ($25K)**
+- ✅ Viral sharing mechanics
+- ✅ Auto-generated post titles  
+- ✅ Subreddit integration
+
+**4. Custom Domain - IONOS ($25K)**
+- ✅ Personal roast pages (username.roastme.io)
+- ✅ SSL certificates and DNS management
+- ✅ Branded public sharing
+
+**5. Deploy - Netlify ($25K)**
+- ✅ Serverless functions architecture
+- ✅ Auto-scaling infrastructure
+- ✅ Edge computing deployment
+
+**6. Startup - Business Plan ($25K)**
+- ✅ Complete business model ($50B TAM)
+- ✅ Revenue projections ($1M ARR Year 2)
+- ✅ Demo traction metrics
 
 ## Development Essentials
 
@@ -63,7 +90,7 @@ GET /api/user/history     # User's roast history
 - **Backend**: Netlify Functions (serverless)
 - **Database**: Supabase (PostgreSQL + Auth)
 - **Python**: Managed with `uv` for microservices
-- **Key APIs**: OpenAI GPT-4, ElevenLabs (voice), RevenueCat (payments)
+- **Key APIs**: Google Gemini 2.5 Flash (primary), ElevenLabs (voice), RevenueCat (payments)
 
 **Core Data Flow**: User Input → Content Parser → AI Analysis → Personality Generator → Output (Text/Voice)
 
